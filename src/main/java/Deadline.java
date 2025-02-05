@@ -3,7 +3,7 @@ public class Deadline extends Task {
     protected String by;
 
     public Deadline(String description, String by) {
-        super(extractContent(description.split(" ")));
+        super(extractContent(description.split("/")[0].split(" ")));
         this.by = by;
     }
 

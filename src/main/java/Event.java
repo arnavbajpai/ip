@@ -4,7 +4,7 @@ public class Event extends Task {
     protected String to;
 
     public Event(String description, String from, String to) {
-        super(extractContent(description.split(" ")));
+        super(extractContent(description.split("/")[0].split(" ")));
         this.from = from;
         this.to = to;
     }

@@ -1,7 +1,6 @@
 import java.util.Scanner;
 public class Krypto {
    static String line = "-".repeat(100);
-
     public static void  printResponse(Task[] lst, int ctr) {
         int len = lst.length;
         System.out.println(line);
@@ -16,8 +15,6 @@ public class Krypto {
             System.out.printf("%d. %s\n", i + 1, lst[i].toString());
         }
     }
-
-
     public static void main(String[] args) {
         System.out.println(line);
         System.out.println("Hello, I'm Krypto \nWhat can I do for you ?");
@@ -48,30 +45,52 @@ public class Krypto {
                 t.unmarkTask();
                 continue;
             }
-            Task newTask = getTask(prompt, split);
-            arr[ctr] = newTask;
-            ctr ++;
-            printResponse(arr, ctr);
+            try {
+                if(checkValid(split)) {
+                    Task newTask = getTask(prompt, split);
+                    arr[ctr] = newTask;
+                    ctr++;
+                    printResponse(arr, ctr);
+                }
+            }
+            catch(KryptoExceptions e) {
+                System.out.println(e);
+            }
         }
-
     }
 
-    private static Task getTask(String prompt, String[] split) {
+    private static Boolean checkValid(String[] split) throws KryptoExceptions {
+       String cmd = split[0];
+       Boolean resp =  cmd.equals("todo") || cmd.equals("event") || cmd.equals("deadline");
+       if(!resp) {
+           throw new InvalidCommand(cmd);
+       }
+       return resp;
+    }
+    private static Task getTask(String prompt, String[] split) throws KryptoExceptions {
         Task newTask;
         String [] parts = prompt.split("/");
-        if (parts.length == 1) {
-            if (split[0].equals("todo")) {
-                newTask = new ToDo(prompt);
+        String type = split[0];
+        if(type.equals("todo")) {
+            if (parts.length > 1) {
+                throw new ToDoException();
             }
-            else {
-                newTask = new Task(prompt);
+            if (split.length <= 1) {
+                throw new IncompleteCommand(type);
             }
+            newTask = new ToDo(prompt);
         }
-        else if (parts.length == 2) {
-            newTask = new Deadline(parts[0], parts[1]);
+        else if (type.equals("deadline")) {
+            if (parts.length != 2) {
+                throw new IncompleteCommand(type);
+            }
+            newTask = new Deadline(prompt, parts[1]);
         }
         else {
-            newTask = new Event(parts[0], parts[1], parts[2]);
+            if (parts.length != 3) {
+                throw new IncompleteCommand(type);
+            }
+            newTask = new Event(prompt, parts[1], parts[2]);
         }
         return newTask;
     }
