@@ -1,32 +1,38 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Krypto {
    static String line = "-".repeat(100);
-    public static void  printResponse(Task[] lst, int ctr) {
-        int len = lst.length;
+    private static String printResponse(ArrayList<Task> lst) {
+        int len = lst.size();
+        return String.format("Got it. I've added this task :  %s\n" +
+                        "Now you have %d tasks in the list."
+                , lst.get(len-1), len);
+    }
+
+    public static void printList(ArrayList<Task> lst) {
         System.out.println(line);
-        System.out.printf("Got it. I've added this task :  %s\n", lst[ctr -1]);
-        System.out.printf("Now you have %d tasks in the list.\n", ctr);
+        System.out.println("Here are the tasks in your list:");
+        for(int i = 0; i < lst.size() ; i ++) {
+            System.out.printf("%d. %s\n", i + 1, lst.get(i));
+        }
         System.out.println(line);
     }
 
-    public static void printList(Task[] lst) {
-        System.out.println("Here are the tasks in your list:");
-        for(int i = 0; lst[i] != null ; i ++) {
-            System.out.printf("%d. %s\n", i + 1, lst[i].toString());
-        }
+    public static void printResponseWithLines(String resp) {
+        System.out.println(line);
+        System.out.println(resp);
+        System.out.println(line);
     }
     public static void main(String[] args) {
-        System.out.println(line);
-        System.out.println("Hello, I'm Krypto \nWhat can I do for you ?");
-        System.out.println(line);
-        Task[] arr = new Task[100];
-        int ctr = 0;
+        printResponseWithLines("Hello, I'm Krypto \nWhat can I do for you ?");
+        ArrayList<Task> arr = new ArrayList<Task>();
         Scanner myObj = new Scanner(System.in);
         while(true) {
             String prompt = myObj.nextLine();
             String [] split = prompt.split(" ");
             String first = split[0];
             if (prompt.equals("bye")) {
+                printResponseWithLines("Great talking to you!");
                 break;
             }
             else if (prompt.equals("list")) {
@@ -35,26 +41,30 @@ public class Krypto {
             }
             else if (first.equals("mark")) {
                 int id = Integer.parseInt(split[1]);
-                Task t = arr[id - 1];
-                t.markTask();
+                arr.get(id-1).markTask();
                 continue;
             }
             else if (first.equals("unmark")) {
                 int id = Integer.parseInt(split[1]);
-                Task t = arr[id - 1];
-                t.unmarkTask();
+                arr.get(id-1).unmarkTask();
+                continue;
+            }
+            else if (first.equals("delete")) {
+                int id = Integer.parseInt(split[1]);
+                arr.remove(id -1);
+                printResponseWithLines(String.format("Deleted succesfully." +
+                        " There are now %d tasks remaining in your list.", arr.size()));
                 continue;
             }
             try {
                 if(checkValid(split)) {
                     Task newTask = getTask(prompt, split);
-                    arr[ctr] = newTask;
-                    ctr++;
-                    printResponse(arr, ctr);
+                    arr.add(newTask);
+                    printResponseWithLines(printResponse(arr));
                 }
             }
             catch(KryptoExceptions e) {
-                System.out.println(e);
+               printResponseWithLines(e.toString());
             }
         }
     }
