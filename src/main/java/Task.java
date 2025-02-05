@@ -10,7 +10,6 @@ public class Task {
 
     public static String extractContent(String[] prompt) {
         StringBuilder content = new StringBuilder();
-        System.out.println(prompt.length);
         if (prompt.length <= 1) {
             return "";
         }
