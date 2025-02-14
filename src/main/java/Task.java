@@ -8,6 +8,7 @@ public class Task {
         this.description = description;
     }
 
+
     public static String extractContent(String[] prompt) {
         StringBuilder content = new StringBuilder();
         if (prompt.length <= 1) {
@@ -33,6 +34,10 @@ public class Task {
     }
     public String getStatusIcon() {
         return this.sign;
+    }
+
+    public String toFileString() {
+        return "";
     }
     @Override
     public String toString() {

@@ -1,87 +1,93 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 public class Krypto {
-   static String line = "-".repeat(100);
+    private static final String HORIZONTAL_LINE = "-".repeat(100);
+    private static final String FILE_PATH = "Krypto.txt";
+
     private static String printResponse(ArrayList<Task> lst) {
         int len = lst.size();
-        return String.format("Got it. I've added this task :  %s\n" +
-                        "Now you have %d tasks in the list."
-                , lst.get(len-1), len);
+        return String.format("Got it. I've added this task :  %s\nNow you have %d tasks in the list.", lst.get(len - 1), len);
     }
 
     public static void printList(ArrayList<Task> lst) {
-        System.out.println(line);
+        System.out.println(HORIZONTAL_LINE);
         System.out.println("Here are the tasks in your list:");
-        for(int i = 0; i < lst.size() ; i ++) {
+        for (int i = 0; i < lst.size(); i++) {
             System.out.printf("%d. %s\n", i + 1, lst.get(i));
         }
-        System.out.println(line);
+        System.out.println(HORIZONTAL_LINE);
     }
 
     public static void printResponseWithLines(String resp) {
-        System.out.println(line);
+        System.out.println(HORIZONTAL_LINE);
         System.out.println(resp);
-        System.out.println(line);
+        System.out.println(HORIZONTAL_LINE);
     }
+
     public static void main(String[] args) {
-        printResponseWithLines("Hello, I'm Krypto \nWhat can I do for you ?");
-        ArrayList<Task> arr = new ArrayList<Task>();
+        ArrayList<Task> arr = loadTasksFromFile(); // Load tasks from file
+        printResponseWithLines("Hello, I'm Krypto \nWhat can I do for you?");
+
         Scanner myObj = new Scanner(System.in);
-        while(true) {
+        while (true) {
             String prompt = myObj.nextLine();
-            String [] split = prompt.split(" ");
+            String[] split = prompt.split(" ");
             String first = split[0];
+
             if (prompt.equals("bye")) {
                 printResponseWithLines("Great talking to you!");
                 break;
-            }
-            else if (prompt.equals("list")) {
+            } else if (prompt.equals("list")) {
                 printList(arr);
                 continue;
-            }
-            else if (first.equals("mark")) {
-                int id = Integer.parseInt(split[1]);
-                arr.get(id-1).markTask();
+            } else if (first.equals("mark")) {
+                int id = Integer.parseInt(split[1]) - 1;
+                arr.get(id).markTask();
+                saveTasksToFile(arr);  // Save changes
+                continue;
+            } else if (first.equals("unmark")) {
+                int id = Integer.parseInt(split[1]) - 1;
+                arr.get(id).unmarkTask();
+                saveTasksToFile(arr);  // Save changes
+                continue;
+            } else if (first.equals("delete")) {
+                int id = Integer.parseInt(split[1]) - 1;
+                arr.remove(id);
+                saveTasksToFile(arr);  // Save changes
+                printResponseWithLines(String.format("Deleted successfully. There are now %d tasks remaining in your list.", arr.size()));
                 continue;
             }
-            else if (first.equals("unmark")) {
-                int id = Integer.parseInt(split[1]);
-                arr.get(id-1).unmarkTask();
-                continue;
-            }
-            else if (first.equals("delete")) {
-                int id = Integer.parseInt(split[1]);
-                arr.remove(id -1);
-                printResponseWithLines(String.format("Deleted succesfully." +
-                        " There are now %d tasks remaining in your list.", arr.size()));
-                continue;
-            }
+
             try {
-                if(checkValid(split)) {
+                if (checkValid(split)) {
                     Task newTask = getTask(prompt, split);
                     arr.add(newTask);
+                    saveTasksToFile(arr);  // Save changes
                     printResponseWithLines(printResponse(arr));
                 }
-            }
-            catch(KryptoExceptions e) {
-               printResponseWithLines(e.toString());
+            } catch (KryptoExceptions e) {
+                printResponseWithLines(e.toString());
             }
         }
     }
 
     private static Boolean checkValid(String[] split) throws KryptoExceptions {
-       String cmd = split[0];
-       Boolean resp =  cmd.equals("todo") || cmd.equals("event") || cmd.equals("deadline");
-       if(!resp) {
-           throw new InvalidCommand(cmd);
-       }
-       return resp;
+        String cmd = split[0];
+        Boolean resp = cmd.equals("todo") || cmd.equals("event") || cmd.equals("deadline");
+        if (!resp) {
+            throw new InvalidCommand(cmd);
+        }
+        return resp;
     }
+
     private static Task getTask(String prompt, String[] split) throws KryptoExceptions {
         Task newTask;
-        String [] parts = prompt.split("/");
+        String[] parts = prompt.split("/");
         String type = split[0];
-        if(type.equals("todo")) {
+
+        if (type.equals("todo")) {
             if (parts.length > 1) {
                 throw new ToDoException();
             }
@@ -89,19 +95,67 @@ public class Krypto {
                 throw new IncompleteCommand(type);
             }
             newTask = new ToDo(prompt);
-        }
-        else if (type.equals("deadline")) {
+        } else if (type.equals("deadline")) {
             if (parts.length != 2) {
                 throw new IncompleteCommand(type);
             }
             newTask = new Deadline(prompt, parts[1]);
-        }
-        else {
+        } else {
             if (parts.length != 3) {
                 throw new IncompleteCommand(type);
             }
             newTask = new Event(prompt, parts[1], parts[2]);
         }
         return newTask;
+    }
+
+    private static ArrayList<Task> loadTasksFromFile() {
+        ArrayList<Task> tasks = new ArrayList<>();
+        File file = new File(FILE_PATH);
+
+        if (!file.exists()) return tasks;
+
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split(" \\| ");
+
+                Task task;
+                boolean isMarked = parts[1].equals("1");
+
+                switch (parts[0]) {
+                    case "T":
+                        task = new ToDo(parts[2]);
+                        break;
+                    case "D":
+                        task = new Deadline(parts[2], parts[3]);
+                        break;
+                    case "E":
+                        task = new Event(parts[2], parts[3], parts[4]);
+                        break;
+                    default:
+                        continue;
+                }
+
+                if (isMarked) {
+                    task.markTask();
+                }
+                tasks.add(task);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Error loading tasks: File not found.");
+        }
+        return tasks;
+    }
+
+    private static void saveTasksToFile(ArrayList<Task> tasks) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            for (Task task : tasks) {
+                writer.write(task.toFileString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error saving tasks to file.");
+        }
     }
 }
