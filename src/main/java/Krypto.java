@@ -1,10 +1,13 @@
 import java.io.*;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Krypto {
     private static final String HORIZONTAL_LINE = "-".repeat(100);
-    private static final String FILE_PATH = "Krypto.txt";
+    private static final String FILE_PATH = "src/main/data/Krypto.txt";
+
 
     private static String printResponse(ArrayList<Task> lst) {
         int len = lst.size();
@@ -27,7 +30,7 @@ public class Krypto {
     }
 
     public static void main(String[] args) {
-        ArrayList<Task> arr = loadTasksFromFile(); // Load tasks from file
+        ArrayList<Task> arr = loadTasksFromFile();
         printResponseWithLines("Hello, I'm Krypto \nWhat can I do for you?");
 
         Scanner myObj = new Scanner(System.in);
@@ -64,7 +67,7 @@ public class Krypto {
                 if (checkValid(split)) {
                     Task newTask = getTask(prompt, split);
                     arr.add(newTask);
-                    saveTasksToFile(arr);  // Save changes
+                    saveTasksToFile(arr);
                     printResponseWithLines(printResponse(arr));
                 }
             } catch (KryptoExceptions e) {
@@ -97,9 +100,13 @@ public class Krypto {
             newTask = new ToDo(prompt);
         } else if (type.equals("deadline")) {
             if (parts.length != 2) {
-                throw new IncompleteCommand(type);
+                throw new IncompleteCommand("deadline");
             }
-            newTask = new Deadline(prompt, parts[1]);
+            try {
+                newTask = new Deadline(prompt, parts[1]);
+            } catch (DateTimeParseException e) {
+                throw new KryptoExceptions("Invalid date format! Use dd/MM/yyyy HHmm (e.g., 2/12/2019 1800).");
+            }
         } else {
             if (parts.length != 3) {
                 throw new IncompleteCommand(type);
@@ -112,31 +119,32 @@ public class Krypto {
     private static ArrayList<Task> loadTasksFromFile() {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(FILE_PATH);
-
-        if (!file.exists()) return tasks;
+        if (!file.exists()){
+            System.out.println("File not found! Expected at: " + file.getAbsolutePath());
+            return tasks;
+        }
 
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split(" \\| ");
-
+                System.out.println(Arrays.toString(parts));
                 Task task;
                 boolean isMarked = parts[1].equals("1");
 
                 switch (parts[0]) {
                     case "T":
-                        task = new ToDo(parts[2]);
+                        task = new ToDo("todo "+ parts[2]);
                         break;
                     case "D":
-                        task = new Deadline(parts[2], parts[3]);
+                        task = new Deadline("deadline " + parts[2], parts[3]);
                         break;
                     case "E":
-                        task = new Event(parts[2], parts[3], parts[4]);
+                        task = new Event("event " + parts[2], parts[3], parts[4]);
                         break;
                     default:
                         continue;
                 }
-
                 if (isMarked) {
                     task.markTask();
                 }
