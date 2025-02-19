@@ -1,6 +1,7 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 public class Event extends Task {
 
     protected LocalDateTime from;
@@ -20,7 +21,15 @@ public class Event extends Task {
     }
 
     @Override
+    public boolean onThisDay(String date) {
+        LocalDate date1 = LocalDate.parse(date);
+        LocalDate fromDate = LocalDate.parse(from.format(INPUT_FORMAT).split(" ")[0]);
+        LocalDate toDate = LocalDate.parse(to.format(INPUT_FORMAT).split(" ")[0]);
+        return(date1.equals(fromDate) || date1.equals(toDate));
+    }
+
+    @Override
     public String toFileString() {
-        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + from.format(INPUT_FORMAT) + " | " + to.format(INPUT_FORMAT);
+        return "E | " + (super.getStatusIcon()) + " | " + description + " | " + from.format(INPUT_FORMAT) + " | " + to.format(INPUT_FORMAT);
     }
 }

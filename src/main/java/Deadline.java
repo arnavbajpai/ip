@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -12,7 +13,12 @@ public class Deadline extends Task {
         super(extractContent(description.split("/")[0].split(" ")));
         this.by = LocalDateTime.parse(by, INPUT_FORMAT);
     }
-
+    @Override
+    public boolean onThisDay(String date) {
+        LocalDate date1 = LocalDate.parse(date);
+        LocalDate byDate = LocalDate.parse(by.format(INPUT_FORMAT).split(" ")[0]);
+        return(date1.equals(byDate));
+    }
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by.format(OUTPUT_FORMAT) + ")";
@@ -20,6 +26,6 @@ public class Deadline extends Task {
 
     @Override
     public String toFileString() {
-        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by.format(INPUT_FORMAT);
+        return "D | " + (super.getStatusIcon()) + " | " + description + " | " + by.format(INPUT_FORMAT);
     }
 }

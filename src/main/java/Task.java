@@ -7,8 +7,9 @@ public class Task {
     public Task(String description) {
         this.description = description;
     }
-
-
+    public boolean onThisDay(String date) {
+        return false;
+    }
     public static String extractContent(String[] prompt) {
         StringBuilder content = new StringBuilder();
         if (prompt.length <= 1) {
@@ -19,12 +20,20 @@ public class Task {
         }
         return content.toString();
     }
-
     public void markTask() {
         this.isDone = true;
         this.sign = "X";
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(this);
+    }
+
+    public void markTask(boolean print) {
+        this.isDone = true;
+        this.sign = "X";
+        if(print) {
+            System.out.println("Nice! I've marked this task as done:");
+            System.out.println(this);
+        }
     }
     public void unmarkTask() {
         this.isDone = false;
