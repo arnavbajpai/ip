@@ -1,6 +1,6 @@
-T | 1 | read book 
-D | 0 | return book  | 2019-02-16 18:00
-E | 0 | project meeting  | 2019-08-06 14:00 | 2019-08-06 16:00
-T | 1 | join sports club 
-E | 1 | career fair  | 2019-02-19 10:00 | 2019-02-19 12:00
-E | 1 | 2107 lec  | 2019-02-19 10:00 | 2019-02-19 12:00
+T |  | read book 
+D |  | return book  | 2019-02-16 18:00
+E | X | project meeting  | 2019-08-06 14:00 | 2019-08-06 16:00
+T |  | join sports club 
+E |  | career fair  | 2019-02-19 10:00 | 2019-02-19 12:00
+E | X | 2107 lec  | 2019-02-19 10:00 | 2019-02-19 12:00

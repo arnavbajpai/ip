@@ -1,4 +1,6 @@
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,7 +9,6 @@ import java.util.Scanner;
 public class Krypto {
     private static final String HORIZONTAL_LINE = "-".repeat(100);
     private static final String FILE_PATH = "src/main/data/Krypto.txt";
-
 
     private static String printResponse(ArrayList<Task> lst) {
         int len = lst.size();
@@ -19,6 +20,24 @@ public class Krypto {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < lst.size(); i++) {
             System.out.printf("%d. %s\n", i + 1, lst.get(i));
+        }
+        System.out.println(HORIZONTAL_LINE);
+    }
+
+    public static void printList(ArrayList<Task> lst, String date) {
+        System.out.println(HORIZONTAL_LINE);
+        LocalDate queryDate = LocalDate.parse(date);
+        boolean found = false;
+        System.out.println("Finding tasks on " + queryDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
+        for (int i = 0; i < lst.size(); i++) {
+           Task t = lst.get(i);
+           if(t.onThisDay(date)) {
+               System.out.printf("%d. %s\n", i + 1, lst.get(i));
+               found = true;
+           }
+        }
+        if(!found) {
+            System.out.println("No tasks on this day!");
         }
         System.out.println(HORIZONTAL_LINE);
     }
@@ -48,21 +67,24 @@ public class Krypto {
             } else if (first.equals("mark")) {
                 int id = Integer.parseInt(split[1]) - 1;
                 arr.get(id).markTask();
-                saveTasksToFile(arr);  // Save changes
+                saveTasksToFile(arr);
                 continue;
             } else if (first.equals("unmark")) {
                 int id = Integer.parseInt(split[1]) - 1;
                 arr.get(id).unmarkTask();
-                saveTasksToFile(arr);  // Save changes
+                saveTasksToFile(arr);
                 continue;
             } else if (first.equals("delete")) {
                 int id = Integer.parseInt(split[1]) - 1;
                 arr.remove(id);
-                saveTasksToFile(arr);  // Save changes
+                saveTasksToFile(arr);
                 printResponseWithLines(String.format("Deleted successfully. There are now %d tasks remaining in your list.", arr.size()));
                 continue;
             }
-
+            else if(first.equals("show")) {
+                printList(arr, split[1]);
+                continue;
+            }
             try {
                 if (checkValid(split)) {
                     Task newTask = getTask(prompt, split);
@@ -128,10 +150,8 @@ public class Krypto {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split(" \\| ");
-                System.out.println(Arrays.toString(parts));
                 Task task;
-                boolean isMarked = parts[1].equals("1");
-
+                String isMarked = parts[1];
                 switch (parts[0]) {
                     case "T":
                         task = new ToDo("todo "+ parts[2]);
@@ -145,8 +165,8 @@ public class Krypto {
                     default:
                         continue;
                 }
-                if (isMarked) {
-                    task.markTask();
+                if (isMarked.equals("X")) {
+                    task.markTask(false);
                 }
                 tasks.add(task);
             }

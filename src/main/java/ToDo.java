@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public class ToDo extends Task {
 
 
@@ -11,7 +13,7 @@ public class ToDo extends Task {
 
     @Override
     public String toFileString() {
-        return "T | " + (isDone ? "1" : "0") + " | " + description;
+        return "T | " + (super.getStatusIcon()) + " | " + description;
     }
 
 
