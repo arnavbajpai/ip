@@ -2,6 +2,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 public class Event extends Task {
 
     protected LocalDateTime from;
@@ -9,7 +11,7 @@ public class Event extends Task {
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy ha");
 
-    public Event(String description, String from, String to) {
+    public Event(String description, String from, String to) throws DateTimeParseException {
         super(extractContent(description.split("/")[0].split(" ")));
         this.from = LocalDateTime.parse(from, INPUT_FORMAT);
         this.to = LocalDateTime.parse(to, INPUT_FORMAT);
