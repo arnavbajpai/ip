@@ -3,15 +3,24 @@ import Krypto.Exceptions.KryptoExceptions;
 import Krypto.IO.*;
 import Krypto.Utils.*;
 
-public class ListCommand extends Command{
+/**
+ * Represents a command to display all tasks in the task list.
+ */
+public class ListCommand extends Command {
 
-    public ListCommand(){}
+    /**
+     * Constructs a ListCommand.
+     * This constructor does not require any parameters.
+     */
+    public ListCommand() {}
+
     @Override
-    public void execute(UI ui, TaskList tasks, Storage storage)throws KryptoExceptions {
+    public void execute(UI ui, TaskList tasks, Storage storage) throws KryptoExceptions {
         tasks.printList();
     }
+
     @Override
-    public  boolean isExit() {
+    public boolean isExit() {
         return false;
     }
 }

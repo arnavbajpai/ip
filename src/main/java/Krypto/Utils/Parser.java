@@ -4,9 +4,22 @@ import java.time.format.DateTimeParseException;
 import Krypto.Exceptions.*;
 import Krypto.Task.*;
 
+/**
+ * Parses user input and converts it into executable commands.
+ */
 public class Parser {
-    public Parser() {
-    }
+    /**
+     * Constructs a Parser instance.
+     */
+    public Parser() {}
+
+    /**
+     * Parses the given user input and returns the corresponding command.
+     *
+     * @param prompt The user input string.
+     * @return The parsed command.
+     * @throws KryptoExceptions If the command is invalid or incomplete.
+     */
     public static Command parse(String prompt) throws KryptoExceptions {
         String[] split = prompt.split(" ");
         String first = split[0];
@@ -21,6 +34,15 @@ public class Parser {
             default -> throw new InvalidCommand(first);
         };
     }
+
+    /**
+     * Creates a task-related command based on user input.
+     *
+     * @param prompt The user input string.
+     * @param split  The split components of the user input.
+     * @return The parsed command.
+     * @throws KryptoExceptions If the command is invalid or incomplete.
+     */
     private static Command createTaskCommand(String prompt, String[] split) throws KryptoExceptions {
         String type = split[0];
         String[] parts = prompt.split("/");
@@ -58,6 +80,12 @@ public class Parser {
         return new AddCommand(newTask);
     }
 
+    /**
+     * Parses a storage entry and returns the corresponding task.
+     *
+     * @param line A line from the storage file.
+     * @return The parsed task.
+     */
     public static Task parseStorage(String line) {
         String[] parts = line.split(" \\| ");
         Task task;
