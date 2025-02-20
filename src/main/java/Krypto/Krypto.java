@@ -7,15 +7,15 @@ import Krypto.Utils.*;
 
 public class Krypto {
     private static final String FILE_PATH = "src/main/data/Krypto.txt";
-    private final Storage storage;
+    private Storage storage;
     private TaskList tasks;
     private final UI ui;
     public Krypto(String filePath) {
         ui = new UI();
-        storage = new Storage(filePath);
         try {
+            storage = new Storage(filePath);
             tasks = new TaskList(storage.load(), ui);
-        } catch (FileNotFoundException e) {
+        } catch (KryptoExceptions e) {
             ui.showError(e);
             tasks = new TaskList();
         }

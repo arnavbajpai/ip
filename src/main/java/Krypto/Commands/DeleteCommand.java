@@ -1,4 +1,5 @@
 package Krypto.Commands;
+import Krypto.Exceptions.KryptoExceptions;
 import Krypto.IO.*;
 import Krypto.Utils.*;
 public class DeleteCommand extends Command {
@@ -6,7 +7,7 @@ public class DeleteCommand extends Command {
     public DeleteCommand(int index) {
         this.index = index;
     }
-    public void execute(UI ui, TaskList tasks, Storage storage) {
+    public void execute(UI ui, TaskList tasks, Storage storage) throws KryptoExceptions {
         tasks.deleteTask(index);
         storage.store(tasks);
     }
