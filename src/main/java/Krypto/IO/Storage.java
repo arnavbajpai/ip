@@ -1,7 +1,9 @@
+package Krypto.IO;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import Krypto.Task.*;
+import Krypto.Utils.*;
 public class Storage {
 
     private final File file;

@@ -1,7 +1,9 @@
+package Krypto.IO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import Krypto.Task.*;
 
 public class UI {
     private static final String HORIZONTAL_LINE = "-".repeat(100);

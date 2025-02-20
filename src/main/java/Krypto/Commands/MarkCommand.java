@@ -1,3 +1,7 @@
+package Krypto.Commands;
+import Krypto.IO.*;
+import Krypto.Utils.*;
+
 public class MarkCommand extends Command {
     private int index;
     public MarkCommand(int index) {

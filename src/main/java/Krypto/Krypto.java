@@ -1,4 +1,10 @@
+package Krypto;
 import java.io.*;
+import Krypto.Commands.*;
+import Krypto.Exceptions.*;
+import Krypto.IO.*;
+import Krypto.Utils.*;
+
 public class Krypto {
     private static final String FILE_PATH = "src/main/data/Krypto.txt";
     private final Storage storage;

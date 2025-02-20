@@ -1,3 +1,7 @@
+package Krypto.Commands;
+import Krypto.IO.*;
+import Krypto.Utils.*;
+import Krypto.Task.*;
 public class AddCommand extends Command {
     private Task newTask;
     public AddCommand(Task task) {

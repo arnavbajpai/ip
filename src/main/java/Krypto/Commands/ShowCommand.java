@@ -1,3 +1,7 @@
+package Krypto.Commands;
+import Krypto.IO.*;
+import Krypto.Utils.*;
+
 public class ShowCommand extends Command{
     private String date;
     public ShowCommand(String date) {

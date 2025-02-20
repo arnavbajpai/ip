@@ -1,3 +1,4 @@
+package Krypto.Exceptions;
 public class IncompleteCommand extends KryptoExceptions {
     private String type;
     public IncompleteCommand(String type) {

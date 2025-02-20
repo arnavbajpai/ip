@@ -1,3 +1,7 @@
+package Krypto.Commands;
+import Krypto.IO.*;
+import Krypto.Utils.*;
+
 public class ExitCommand extends Command{
     public ExitCommand() {}
     @Override

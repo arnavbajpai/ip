@@ -1,3 +1,4 @@
+package Krypto.Exceptions;
 public class InvalidCommand extends KryptoExceptions {
 
     private String unknown;
