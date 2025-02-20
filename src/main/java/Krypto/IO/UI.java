@@ -5,61 +5,71 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import Krypto.Task.*;
 
+/**
+ * Handles user interface interactions, displaying messages and reading user input.
+ */
 public class UI {
+
     private static final String HORIZONTAL_LINE = "-".repeat(100);
     private Scanner myObj;
+
+    /**
+     * Constructs a UI object that initializes the scanner for reading user input.
+     */
     public UI() {
         myObj = new Scanner(System.in);
     }
+
     public void showLine() {
         System.out.println(HORIZONTAL_LINE);
     }
+
     public void showError(Exception e) {
         printResponseWithLines(e.toString());
     }
+
     public void showExit() {
         printResponseWithLines("Great talking to you!");
     }
+
     public void showWelcome() {
         printResponseWithLines("Hello, I'm Krypto \nWhat can I do for you?");
     }
+
+    /**
+     * Reads a command from the user input.
+     *
+     * @return The command input by the user.
+     */
     public String readCommand() {
         return myObj.nextLine();
     }
+
+    /**
+     * Displays a response after adding a task.
+     *
+     * @param t The task that was added.
+     * @param len The current number of tasks in the list.
+     */
     public void addTaskResponse(Task t, int len) {
         printResponseWithLines(String.format("Got it. I've added this task :  %s\nNow you have %d tasks in the list.", t, len));
     }
 
+    /**
+     * Displays a response after deleting a task.
+     *
+     * @param t The task that was removed.
+     * @param len The current number of tasks in the list.
+     */
     public void deleteTaskResponse(Task t, int len) {
         printResponseWithLines(String.format("Got it. I've removed this task :  %s\nNow you have %d tasks in the list.", t, len));
     }
-    public void printList(ArrayList<Task> lst) {
-        System.out.println(HORIZONTAL_LINE);
-        System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < lst.size(); i++) {
-            System.out.printf("%d. %s\n", i + 1, lst.get(i));
-        }
-        System.out.println(HORIZONTAL_LINE);
-    }
 
-    public void printList(ArrayList<Task> lst, String date) {
-        System.out.println(HORIZONTAL_LINE);
-        LocalDate queryDate = LocalDate.parse(date);
-        boolean found = false;
-        System.out.println("Finding tasks on " + queryDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
-        for (int i = 0; i < lst.size(); i++) {
-            Task t = lst.get(i);
-            if(t.onThisDay(date)) {
-                System.out.printf("%d. %s\n", i + 1, lst.get(i));
-                found = true;
-            }
-        }
-        if(!found) {
-            System.out.println("No tasks on this day!");
-        }
-        System.out.println(HORIZONTAL_LINE);
-    }
-
+    /**
+     * Prints the given response with horizontal lines surrounding it.
+     *
+     * @param resp The response message to print.
+     */
     public static void printResponseWithLines(String resp) {
         System.out.println(HORIZONTAL_LINE);
         System.out.println(resp);

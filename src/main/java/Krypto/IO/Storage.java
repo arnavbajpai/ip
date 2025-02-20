@@ -6,6 +6,9 @@ import java.util.Scanner;
 import Krypto.Exceptions.KryptoExceptions;
 import Krypto.Task.*;
 import Krypto.Utils.*;
+/**
+ * Manages reading and writing tasks to and from a file.
+ */
 public class Storage {
 
     private final File file;
@@ -15,15 +18,27 @@ public class Storage {
     private static final String FILE_READ_EXCEPTION = "File could not be read.";
     private static final String FILE_NOT_CREATED_EXCEPTION = "Target file could not be created.";
 
-    public Storage(String pathName) throws KryptoExceptions{
+    /**
+     * Constructs a Storage object that handles file operations.
+     *
+     * @param pathName The path to the file where tasks are stored.
+     * @throws KryptoExceptions If the file cannot be created or accessed.
+     */
+    public Storage(String pathName) throws KryptoExceptions {
         this.file = new File(pathName);
         this.pathName = pathName;
-        if(!file.exists()) {
+        if (!file.exists()) {
             System.out.println("File not found. Creating new file.....");
             createFile();
         }
     }
-    private void createFile() throws KryptoExceptions{
+
+    /**
+     * Creates a new file and its parent directories if they do not exist.
+     *
+     * @throws KryptoExceptions If the file cannot be created.
+     */
+    private void createFile() throws KryptoExceptions {
         try {
             File parentDir = file.getParentFile();
             if (parentDir != null && !parentDir.exists()) {
@@ -34,6 +49,13 @@ public class Storage {
             throw new KryptoExceptions(FILE_NOT_CREATED_EXCEPTION);
         }
     }
+
+    /**
+     * Loads tasks from the file and returns them as a list.
+     *
+     * @return A list of tasks loaded from the file.
+     * @throws KryptoExceptions If the file cannot be read.
+     */
     public ArrayList<Task> load() throws KryptoExceptions {
         ArrayList<Task> tasks = new ArrayList<>();
         try (Scanner scanner = new Scanner(file)) {
@@ -48,6 +70,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Stores the tasks to the file.
+     *
+     * @param tasks The list of tasks to store.
+     * @throws KryptoExceptions If the file cannot be written to.
+     */
     public void store(TaskList tasks) throws KryptoExceptions {
         int len = tasks.getLength();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathName))) {

@@ -3,18 +3,30 @@ import Krypto.Exceptions.KryptoExceptions;
 import Krypto.IO.*;
 import Krypto.Utils.*;
 import Krypto.Task.*;
+/**
+ * Represents a command to add a task to the task list.
+ */
 public class AddCommand extends Command {
+
     private Task newTask;
+
+    /**
+     * Constructs an AddCommand with the specified task.
+     *
+     * @param task The task to be added to the task list.
+     */
     public AddCommand(Task task) {
         this.newTask = task;
     }
+
     @Override
     public void execute(UI ui, TaskList tasks, Storage storage) throws KryptoExceptions {
         tasks.addTask(newTask);
         storage.store(tasks);
     }
+
     @Override
-    public  boolean isExit() {
+    public boolean isExit() {
         return false;
     }
 }
