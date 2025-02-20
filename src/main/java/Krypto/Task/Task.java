@@ -17,7 +17,11 @@ public class Task {
             return "";
         }
         for(int i = 1; i < prompt.length; i ++) {
-            content.append(prompt[i]).append(" ");
+            if(i != prompt.length - 1) {
+                content.append(prompt[i]).append(" ");
+                continue;
+            }
+            content.append(prompt[i]);
         }
         return content.toString();
     }
@@ -45,6 +49,8 @@ public class Task {
     public String getStatusIcon() {
         return this.sign;
     }
+
+    public String getDescription() {return this.description; }
 
     public String toFileString() {
         return "";
