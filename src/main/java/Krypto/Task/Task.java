@@ -98,6 +98,15 @@ public class Task {
         return "";
     }
 
+    public boolean hasKeyword(String keyword) {
+        String[] parts = description.split(" ");
+        for(int i = 0; i < parts.length; i ++) {
+            if(keyword.equals(parts[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
     @Override
     public String toString() {
         return "[" + this.sign + "] " + this.description;

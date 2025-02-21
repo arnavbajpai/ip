@@ -59,8 +59,8 @@ public class TaskList {
         System.out.println("Fetching your tasks on " + queryDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
         for (int i = 0; i < len; i++) {
             Task t = taskList.get(i);
-            if (t.onThisDay(date)) {
-                System.out.printf("%d. %s\n", i + 1, taskList.get(i));
+            if(t.onThisDay(date)) {
+                System.out.printf("%d. %s\n", i + 1, t);
                 found = true;
             }
         }
@@ -100,5 +100,22 @@ public class TaskList {
         Task t = taskList.remove(index);
         len--;
         ui.deleteTaskResponse(t, len);
+    }
+
+    public void getTasksWithKeyword(String keyword) {
+        ui.showLine();
+        boolean found = false;
+        System.out.println("Looking for tasks with " + keyword);
+        for(int i = 0; i < len; i ++) {
+            Task t = taskList.get(i);
+            if(t.hasKeyword(keyword)) {
+                System.out.printf("%d. %s\n", i + 1, t);
+                found = true;
+            }
+        }
+        if(!found) {
+            System.out.println("No matches found for " + keyword);
+        }
+        ui.showLine();
     }
 }
