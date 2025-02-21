@@ -1,6 +1,6 @@
 package Krypto.Exceptions;
 public class IncompleteCommand extends KryptoExceptions {
-    private String type;
+    private final String type;
     public IncompleteCommand(String type) {
         super("");
         this.type = type;

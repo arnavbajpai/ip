@@ -1,8 +1,9 @@
 package Krypto.Commands;
 import Krypto.Exceptions.KryptoExceptions;
-import Krypto.IO.*;
-import Krypto.Utils.*;
-import Krypto.Task.*;
+import Krypto.IO.UI;
+import Krypto.IO.Storage;
+import Krypto.Utils.TaskList;
+import Krypto.Task.Task;
 public class AddCommand extends Command {
     private Task newTask;
     public AddCommand(Task task) {
@@ -14,7 +15,7 @@ public class AddCommand extends Command {
         storage.store(tasks);
     }
     @Override
-    public  boolean isExit() {
+    public boolean isExit() {
         return false;
     }
 }

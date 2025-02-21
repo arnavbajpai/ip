@@ -1,13 +1,13 @@
 package Krypto.Commands;
 import Krypto.Exceptions.KryptoExceptions;
-import Krypto.IO.*;
-import Krypto.Utils.*;
+import Krypto.IO.UI;
+import Krypto.IO.Storage;
+import Krypto.Utils.TaskList;
 
 public class MarkCommand extends Command {
-    private int index;
+    private final int index;
     public MarkCommand(int index) {
         this.index = index;
-
     }
     public void execute(UI ui, TaskList tasks, Storage storage)throws KryptoExceptions {
         tasks.getTask(index).markTask();

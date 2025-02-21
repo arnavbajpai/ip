@@ -1,7 +1,8 @@
 package Krypto.Commands;
 import Krypto.Exceptions.KryptoExceptions;
-import Krypto.IO.*;
-import Krypto.Utils.*;
+import Krypto.IO.UI;
+import Krypto.IO.Storage;
+import Krypto.Utils.TaskList;
 
 public class ExitCommand extends Command{
     public ExitCommand() {}
@@ -10,7 +11,7 @@ public class ExitCommand extends Command{
         ui.showExit();
     }
     @Override
-    public  boolean isExit() {
+    public boolean isExit() {
         return true;
     }
 }

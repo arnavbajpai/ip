@@ -1,7 +1,6 @@
 package Krypto.Exceptions;
 public class InvalidCommand extends KryptoExceptions {
-
-    private String unknown;
+    private final String unknown;
 
     public InvalidCommand(String unknown) {
         super("");

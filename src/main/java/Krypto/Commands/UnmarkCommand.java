@@ -1,9 +1,10 @@
 package Krypto.Commands;
 import Krypto.Exceptions.KryptoExceptions;
-import Krypto.IO.*;
-import Krypto.Utils.*;
+import Krypto.IO.UI;
+import Krypto.IO.Storage;
+import Krypto.Utils.TaskList;
 public class UnmarkCommand extends Command {
-    private int index;
+    private final int index;
     public UnmarkCommand(int index) {
         this.index = index;
     }
