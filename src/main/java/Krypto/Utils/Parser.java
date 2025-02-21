@@ -17,6 +17,7 @@ public class Parser {
             case "unmark" -> new UnmarkCommand(Integer.parseInt(split[1]) - 1);
             case "delete" -> new DeleteCommand(Integer.parseInt(split[1]) - 1);
             case "show" -> new ShowCommand(split[1]);
+            case "find" -> new FindCommand(split[1]);
             case "todo", "event", "deadline" -> createTaskCommand(prompt, split);
             default -> throw new InvalidCommand(first);
         };
