@@ -4,8 +4,7 @@ package Krypto.Exceptions;
  * Represents an exception thrown when an invalid command is entered by the user.
  */
 public class InvalidCommand extends KryptoExceptions {
-
-    private String unknown;
+    private final String unknown;
 
     /**
      * Constructs an InvalidCommand exception with the specified unknown command.

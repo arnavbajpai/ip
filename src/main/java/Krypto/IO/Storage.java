@@ -2,18 +2,18 @@ package Krypto.IO;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import Krypto.Exceptions.KryptoExceptions;
-import Krypto.Task.*;
-import Krypto.Utils.*;
+import Krypto.Task.Task;
+
+import Krypto.Utils.TaskList;
+import Krypto.Utils.Parser;
+
 /**
  * Manages reading and writing tasks to and from a file.
  */
 public class Storage {
-
     private final File file;
     private final String pathName;
-
     private static final String FILE_WRITE_EXCEPTION = "File could not be written.";
     private static final String FILE_READ_EXCEPTION = "File could not be read.";
     private static final String FILE_NOT_CREATED_EXCEPTION = "Target file could not be created.";

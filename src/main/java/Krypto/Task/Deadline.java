@@ -1,7 +1,6 @@
 package Krypto.Task;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
@@ -9,9 +8,7 @@ import java.time.format.DateTimeParseException;
  */
 public class Deadline extends Task {
 
-    protected LocalDateTime by;
-    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy ha");
+    private final LocalDateTime by;
 
     /**
      * Constructs a Deadline object with the specified description and deadline time.

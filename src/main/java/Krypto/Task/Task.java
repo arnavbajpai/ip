@@ -1,11 +1,15 @@
 package Krypto.Task;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Represents a task with a description and completion status.
  */
+
 public class Task {
     protected String description;
     protected boolean isDone = false;
-
+    protected static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    protected static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy ha");
     private String sign = "";
 
     /**

@@ -1,6 +1,5 @@
 package Krypto.Task;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -9,10 +8,8 @@ import java.time.format.DateTimeParseException;
  */
 public class Event extends Task {
 
-    protected LocalDateTime from;
-    protected LocalDateTime to;
-    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy ha");
+    private final LocalDateTime from;
+    private final LocalDateTime to;
 
     /**
      * Constructs an Event task with the specified description, start, and end time.
@@ -35,7 +32,9 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + "(from " + from.format(OUTPUT_FORMAT) + " - to " + to.format(OUTPUT_FORMAT) + ")";
+        return "[E]" + super.toString() + "(from " +
+                from.format(OUTPUT_FORMAT) + " - to " +
+                to.format(OUTPUT_FORMAT) + ")";
     }
 
     /**
@@ -59,6 +58,7 @@ public class Event extends Task {
      */
     @Override
     public String toFileString() {
-        return "E | " + (super.getStatusIcon()) + " | " + description + " | " + from.format(INPUT_FORMAT) + " | " + to.format(INPUT_FORMAT);
+        return "E | " + (super.getStatusIcon()) + " | " + description + " | " +
+                from.format(INPUT_FORMAT) + " | " + to.format(INPUT_FORMAT);
     }
 }

@@ -1,14 +1,14 @@
 package Krypto.Commands;
 import Krypto.Exceptions.KryptoExceptions;
-import Krypto.IO.*;
-import Krypto.Utils.*;
+import Krypto.IO.UI;
+import Krypto.IO.Storage;
+import Krypto.Utils.TaskList;
 
 /**
  * Represents a command to show tasks for a specific date.
  */
 public class ShowCommand extends Command {
-
-    private String date;
+    private final String date;
 
     /**
      * Constructs a ShowCommand with the specified date.
@@ -22,7 +22,6 @@ public class ShowCommand extends Command {
     public void execute(UI ui, TaskList tasks, Storage storage) throws KryptoExceptions {
         tasks.printShowList(date);
     }
-
     public boolean isExit() {
         return false;
     }

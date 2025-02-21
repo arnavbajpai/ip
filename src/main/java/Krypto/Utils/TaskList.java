@@ -2,8 +2,8 @@ package Krypto.Utils;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import Krypto.Task.*;
-import Krypto.IO.*;
+import Krypto.Task.Task;
+import Krypto.IO.UI;
 public class TaskList {
     private ArrayList<Task> taskList;
     private UI ui;

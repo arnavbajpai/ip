@@ -1,12 +1,12 @@
 package Krypto.Commands;
 import Krypto.Exceptions.KryptoExceptions;
-import Krypto.IO.*;
-import Krypto.Utils.*;
+import Krypto.IO.UI;
+import Krypto.IO.Storage;
+import Krypto.Utils.TaskList;
 /**
  * Represents a command to delete a task from the task list.
  */
 public class DeleteCommand extends Command {
-
     private int index;
 
     /**
@@ -22,7 +22,6 @@ public class DeleteCommand extends Command {
         tasks.deleteTask(index);
         storage.store(tasks);
     }
-
     public boolean isExit() {
         return false;
     }

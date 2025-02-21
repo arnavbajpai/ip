@@ -1,9 +1,10 @@
 package Krypto;
-import java.io.*;
-import Krypto.Commands.*;
-import Krypto.Exceptions.*;
-import Krypto.IO.*;
-import Krypto.Utils.*;
+import Krypto.Commands.Command;
+import Krypto.Exceptions.KryptoExceptions;
+import Krypto.IO.UI;
+import Krypto.IO.Storage;
+import Krypto.Utils.Parser;
+import Krypto.Utils.TaskList;
 
 /**
  * The main class for the Krypto application.

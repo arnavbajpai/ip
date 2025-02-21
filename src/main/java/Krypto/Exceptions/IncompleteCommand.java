@@ -4,8 +4,7 @@ package Krypto.Exceptions;
  * Represents an exception thrown when a command has either too many or too few arguments.
  */
 public class IncompleteCommand extends KryptoExceptions {
-
-    private String type;
+    private final String type;
 
     /**
      * Constructs an IncompleteCommand exception with the specified command type.

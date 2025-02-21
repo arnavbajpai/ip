@@ -1,9 +1,6 @@
 package Krypto.IO;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Scanner;
-import Krypto.Task.*;
+import Krypto.Task.Task;
 
 /**
  * Handles user interface interactions, displaying messages and reading user input.
@@ -11,7 +8,7 @@ import Krypto.Task.*;
 public class UI {
 
     private static final String HORIZONTAL_LINE = "-".repeat(100);
-    private Scanner myObj;
+    private final Scanner myObj;
 
     /**
      * Constructs a UI object that initializes the scanner for reading user input.
@@ -70,6 +67,7 @@ public class UI {
      *
      * @param resp The response message to print.
      */
+
     public static void printResponseWithLines(String resp) {
         System.out.println(HORIZONTAL_LINE);
         System.out.println(resp);
