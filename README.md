@@ -1,21 +1,31 @@
-# Krypto ChatBot 🚀  
+# Krypto ChatBot ⚓
 
-## CS2103 IP Project by **Arnav Bajpai**  
+> "Your mind is for having ideas, not holding them." - David Allen ([source](https://en.wikipedia.org/wiki/Dave_Allen_(comedian)))
 
-Krypto is a command-line chatbot that helps you manage your tasks efficiently. It supports adding, deleting, marking, and searching for tasks.  
+DukePro frees your mind of having to remember things you need to do. It's,
 
-## Features  
-- Add tasks: ToDos, Deadlines, and Events  
-- Delete tasks  
-- Mark tasks as done/undone  
-- List all tasks  
-- Search for tasks by keyword  
-- Save and load tasks from a file  
+* text-based
+* easy to learn
+* ~~FAST~~ **SUPER FAST** to use
 
-## Getting Started  
-Follow these steps to get Krypto running on your system:  
+All you need to do is,
 
-1. Ensure you have **Java 11 or later** installed.  
-2. Clone this repository:  
-   ```sh
-   git clone https://github.com/arnavbajpai/ip
+1. download it from [here](https://github.com/arnavbajpai/ip).
+2. double-click it.
+3. add your tasks.
+4. let it manage your tasks for you 😋
+
+And it is **FREE**!
+
+## Features:
+
+- [x] Managing tasks
+- [ ] Managing deadlines (coming soon)
+- [ ] Reminders (coming soon)
+
+If you are a Java programmer, you can use it to practice Java too. Here's the `main` method:
+
+```java
+public static void main(String[] args) {
+        new Krypto(FILE_PATH).run();
+    }
