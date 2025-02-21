@@ -102,6 +102,11 @@ public class TaskList {
         ui.deleteTaskResponse(t, len);
     }
 
+    /**
+     * Displays tasks that contain the specified keyword in their description.
+     *
+     * @param keyword The keyword to search for within task descriptions.
+     */
     public void getTasksWithKeyword(String keyword) {
         ui.showLine();
         boolean found = false;

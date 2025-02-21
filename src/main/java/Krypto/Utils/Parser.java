@@ -9,6 +9,7 @@ import Krypto.Commands.ListCommand;
 import Krypto.Commands.MarkCommand;
 import Krypto.Commands.ShowCommand;
 import Krypto.Commands.UnmarkCommand;
+import Krypto.Commands.FindCommand;
 
 import Krypto.Exceptions.KryptoExceptions;
 import Krypto.Exceptions.IncompleteCommand;
