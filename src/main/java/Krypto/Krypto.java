@@ -5,11 +5,14 @@ import Krypto.IO.GUI;
 import Krypto.IO.Storage;
 import Krypto.Utils.Parser;
 import Krypto.Utils.TaskList;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -24,7 +27,6 @@ public class Krypto extends Application{
     private GUI gui = null;
 
     private AnchorPane root;
-    private final FXMLLoader fxmlLoader;
 
     /**
      * Initializes a Krypto instance with the specified file path.
@@ -33,7 +35,7 @@ public class Krypto extends Application{
      * @param filePath The path to the storage file.
      */
     public Krypto(String filePath) {
-        fxmlLoader = new FXMLLoader(Krypto.class.getResource("/view/GUI.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Krypto.class.getResource("/view/GUI.fxml"));
         try {
             root = fxmlLoader.load();
             gui = fxmlLoader.getController();
@@ -41,7 +43,7 @@ public class Krypto extends Application{
             tasks = new TaskList(storage.load(), gui);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Failed to load GUI.fxml"); // Handle the exception properly
+            throw new RuntimeException("Failed to load GUI.fxml");
         } catch (KryptoExceptions e) {
             gui.showError(e);
             tasks = new TaskList();
@@ -52,16 +54,20 @@ public class Krypto extends Application{
     }
 
     /**
-     * Runs the main event loop of the Krypto application.
-     * Continuously reads user commands and executes them until an exit command is issued.
+     * Runs the command given by the user.
+     *
+     * @param prompt  The user prompt.
      */
 
     public void run(String prompt) {
-        boolean isExit = false;
         try {
             Command c = Parser.parse(prompt);
             c.execute(gui, tasks, storage);
-            isExit = c.isExit();
+            if (c.isExit()) {
+                PauseTransition delay = new PauseTransition(Duration.seconds(1));
+                delay.setOnFinished(event -> Platform.exit());
+                delay.play();
+            }
         } catch (KryptoExceptions e) {
             gui.showError(e);
         }

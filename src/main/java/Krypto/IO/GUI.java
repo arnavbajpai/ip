@@ -35,13 +35,13 @@ public class GUI extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Duke instance */
+    /** Injects the Krypto instance */
     public void setKrypto(Krypto k) {
         krypto = k;
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
+     * Creates two dialog boxes, one echoing user input and the other containing Krypto's reply and then appends them to
      * the dialog container. Clears the user input after processing.
      */
     @FXML
