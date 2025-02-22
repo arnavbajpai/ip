@@ -68,7 +68,7 @@ public class TaskList {
             }
         }
         if (!found) {
-            sb.append("No tasks on this day!");
+            sb.append(String.format("You don't have any tasks on %s", date));
         }
         gui.newResponse(sb.toString());
     }

@@ -14,6 +14,7 @@ import Krypto.Commands.FindCommand;
 import Krypto.Exceptions.KryptoExceptions;
 import Krypto.Exceptions.IncompleteCommand;
 import Krypto.Exceptions.InvalidCommand;
+import Krypto.Exceptions.ToDoException;
 
 import Krypto.Task.Task;
 import Krypto.Task.Deadline;
@@ -24,9 +25,32 @@ import Krypto.Task.ToDo;
  * Parses user input and converts it into executable commands.
  */
 public class Parser {
+    private static final String DEADLINE_FORMAT = "deadline <task description>/yyyy-MM-dd HH:mm";
+    private static final String EVENT_FORMAT = "event <task description>/yyyy-MM-dd HH:mm/yyyy-MM-dd HH:mm";
+    private static String MARK_FORMAT = "mark <index>";
+    private static String UNMARK_FORMAT = "unmark <index>";
+    private static String DELETE_FORMAT = "delete <index>";
+    private static String SHOW_FORMAT = "show yyyy-MM-dd";
+    private static String FIND_FORMAT = "find <keyword>";
+
     /**
-     * Constructs a Parser instance.
+     * Returns the format string for a given command type.
+     *
+     * @param commandType The type of command.
+     * @return The format string for the command.
      */
+    private static String getFormat(String commandType) {
+        return switch (commandType) {
+            case "mark" -> MARK_FORMAT;
+            case "unmark" -> UNMARK_FORMAT;
+            case "delete" -> DELETE_FORMAT;
+            case "show" -> SHOW_FORMAT;
+            case "find" -> FIND_FORMAT;
+            case "deadline" -> DEADLINE_FORMAT;
+            case "event" -> EVENT_FORMAT;
+            default -> "";
+        };
+    }
     public Parser() {}
 
     /**
@@ -39,14 +63,22 @@ public class Parser {
     public static Command parse(String prompt) throws KryptoExceptions {
         String[] split = prompt.split(" ");
         String first = split[0];
+
+        if (first.equals("mark") || first.equals("unmark")
+                || first.equals("delete") || first.equals("show")
+                || first.equals("find")) {
+            if (split.length < 2) {
+                throw new IncompleteCommand(first, getFormat(first));
+            }
+        }
         return switch (first) {
             case "bye" -> new ExitCommand();
             case "list" -> new ListCommand();
             case "mark" -> new MarkCommand(Integer.parseInt(split[1]) - 1);
             case "unmark" -> new UnmarkCommand(Integer.parseInt(split[1]) - 1);
             case "delete" -> new DeleteCommand(Integer.parseInt(split[1]) - 1);
-            case "show" -> new ShowCommand(split[1]); // Add check
-            case "find" -> new FindCommand(split[1]); // Add check
+            case "show" -> new ShowCommand(split[1]);
+            case "find" -> new FindCommand(split[1]);
             case "todo", "event", "deadline" -> createTaskCommand(prompt, split);
             default -> throw new InvalidCommand(first);
         };
@@ -67,28 +99,28 @@ public class Parser {
         switch (type) {
             case "todo":
                 if (parts.length > 1 || split.length <= 1) {
-                    throw new IncompleteCommand(type);
+                    throw new ToDoException();
                 }
                 newTask = new ToDo(prompt);
                 break;
             case "deadline":
                 if (parts.length != 2) {
-                    throw new IncompleteCommand("deadline");
+                    throw new IncompleteCommand("deadline", DEADLINE_FORMAT);
                 }
                 try {
                     newTask = new Deadline(prompt, parts[1]);
                 } catch (DateTimeParseException e) {
-                    throw new KryptoExceptions("Invalid date format! Use dd/MM/yyyy HH:mm (e.g., 2/12/2019 18:00).");
+                    throw new KryptoExceptions("Invalid date format! Use yyyy-MM-dd HH:mm (e.g., 2-12-2019 18:00).");
                 }
                 break;
             case "event":
                 if (parts.length != 3) {
-                    throw new IncompleteCommand(type);
+                    throw new IncompleteCommand("event", EVENT_FORMAT);
                 }
                 try {
                     newTask = new Event(prompt, parts[1], parts[2]);
                 } catch (DateTimeParseException e) {
-                    throw new KryptoExceptions("Invalid date format! Use dd/MM/yyyy HH:mm (e.g., 2/12/2019 18:00).");
+                    throw new KryptoExceptions("Invalid date format! Use yyyy/MM/dd HH:mm (e.g., 2/12/2019 18:00).");
                 }
                 break;
             default:

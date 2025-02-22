@@ -10,7 +10,19 @@ public class KryptoExceptions extends Exception {
      *
      * @param message The detail message explaining the cause of the exception.
      */
+    private final String message;
+
     public KryptoExceptions(String message) {
         super(message);
+        this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return message;
+    }
+    @Override
+    public String getMessage() {
+        return this.toString();
     }
 }

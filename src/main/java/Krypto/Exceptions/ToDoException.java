@@ -14,6 +14,6 @@ public class ToDoException extends KryptoExceptions {
 
     @Override
     public String toString() {
-        return "ToDo tasks don't carry time information.";
+        return "ToDo tasks don't carry time information.\nUse format todo <task description>";
     }
 }

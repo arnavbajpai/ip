@@ -5,19 +5,22 @@ package Krypto.Exceptions;
  */
 public class IncompleteCommand extends KryptoExceptions {
     private final String type;
+    private final String format;
 
     /**
      * Constructs an IncompleteCommand exception with the specified command type.
      *
      * @param type The type of command that has an incomplete number of arguments.
      */
-    public IncompleteCommand(String type) {
+    public IncompleteCommand(String type, String format) {
         super("");
         this.type = type;
+        this.format = format;
     }
+
 
     @Override
     public String toString() {
-        return "Too many or too few arguments for this instruction: " + this.type;
+        return String.format("Invalid format for the instruction %s\n Use format %s", type, format);
     }
 }
