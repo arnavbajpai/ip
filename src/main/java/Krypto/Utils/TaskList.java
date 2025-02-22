@@ -2,6 +2,8 @@ package Krypto.Utils;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+import Krypto.Exceptions.KryptoExceptions;
 import Krypto.Task.Task;
 import Krypto.IO.GUI;
 public class TaskList {
@@ -77,6 +79,7 @@ public class TaskList {
      * @param t The task to be added.
      */
     public void addTask(Task t) {
+        assert t != null : "Task should not be null";
         taskList.add(t);
         len++;
         gui.addTaskResponse(t, len);
@@ -88,7 +91,10 @@ public class TaskList {
      * @param index The index of the task.
      * @return The task at the specified index.
      */
-    public Task getTask(int index) {
+    public Task getTask(int index) throws KryptoExceptions {
+        if(index >= len || index < 0) {
+            throw new KryptoExceptions("Invalid deletion id supplied.");
+        }
         return taskList.get(index);
     }
 
@@ -97,7 +103,10 @@ public class TaskList {
      *
      * @param index The index of the task to be deleted.
      */
-    public void deleteTask(int index) {
+    public void deleteTask(int index) throws KryptoExceptions {
+        if(index >= len || index < 0) {
+            throw new KryptoExceptions("Invalid deletion id supplied.");
+        }
         Task t = taskList.remove(index);
         len--;
         gui.deleteTaskResponse(t, len);
