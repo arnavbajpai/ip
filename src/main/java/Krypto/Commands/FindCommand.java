@@ -2,8 +2,9 @@ package Krypto.Commands;
 
 import Krypto.Exceptions.KryptoExceptions;
 import Krypto.IO.Storage;
-import Krypto.IO.UI;
+import Krypto.IO.GUI;
 import Krypto.Utils.TaskList;
+
 
 /**
  * Executes a command to find tasks that contain a specific keyword.
@@ -22,7 +23,7 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void execute(UI ui, TaskList tasks, Storage storage) throws KryptoExceptions {
+    public void execute(GUI gui, TaskList tasks, Storage storage) throws KryptoExceptions {
         tasks.getTasksWithKeyword(keyword);
     }
 

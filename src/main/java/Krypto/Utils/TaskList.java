@@ -3,21 +3,21 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import Krypto.Task.Task;
-import Krypto.IO.UI;
+import Krypto.IO.GUI;
 public class TaskList {
     private ArrayList<Task> taskList;
-    private UI ui;
+    private GUI gui;
     private int len;
 
     /**
-     * Initializes a TaskList with an existing list of tasks and a UI object.
+     * Initializes a TaskList with an existing list of tasks and a GUI object.
      *
      * @param tasks    The list of tasks.
-     * @param uiObject The UI object for user interaction.
+     * @param guiObject The UI object for user interaction.
      */
-    public TaskList(ArrayList<Task> tasks, UI uiObject) {
+    public TaskList(ArrayList<Task> tasks, GUI guiObject) {
         taskList = tasks;
-        ui = uiObject;
+        gui = guiObject;
         len = tasks.size();
     }
 
@@ -30,12 +30,12 @@ public class TaskList {
      * Prints the list of tasks.
      */
     public void printList() {
-        ui.showLine();
-        System.out.println("Here are the tasks in your list:");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Here are the tasks in your list:\n");
         for (int i = 0; i < len; i++) {
-            System.out.printf("%d. %s\n", i + 1, taskList.get(i));
+            sb.append(String.format("%d. %s\n", i + 1, taskList.get(i)));
         }
-        ui.showLine();
+        gui.newResponse(sb.toString());
     }
 
     /**
@@ -53,21 +53,22 @@ public class TaskList {
      * @param date The date to filter tasks by.
      */
     public void printShowList(String date) {
-        ui.showLine();
+        StringBuilder sb = new StringBuilder();
         LocalDate queryDate = LocalDate.parse(date);
         boolean found = false;
-        System.out.println("Fetching your tasks on " + queryDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
+        sb.append(String.format("Fetching your tasks on %s\n",
+                queryDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))));
         for (int i = 0; i < len; i++) {
             Task t = taskList.get(i);
             if(t.onThisDay(date)) {
-                System.out.printf("%d. %s\n", i + 1, t);
+                sb.append(String.format("%d. %s\n", i + 1, t));
                 found = true;
             }
         }
         if (!found) {
-            System.out.println("No tasks on this day!");
+            sb.append("No tasks on this day!");
         }
-        ui.showLine();
+        gui.newResponse(sb.toString());
     }
 
     /**
@@ -78,7 +79,7 @@ public class TaskList {
     public void addTask(Task t) {
         taskList.add(t);
         len++;
-        ui.addTaskResponse(t, len);
+        gui.addTaskResponse(t, len);
     }
 
     /**
@@ -99,7 +100,7 @@ public class TaskList {
     public void deleteTask(int index) {
         Task t = taskList.remove(index);
         len--;
-        ui.deleteTaskResponse(t, len);
+        gui.deleteTaskResponse(t, len);
     }
 
     /**
@@ -108,19 +109,19 @@ public class TaskList {
      * @param keyword The keyword to search for within task descriptions.
      */
     public void getTasksWithKeyword(String keyword) {
-        ui.showLine();
+        StringBuilder sb = new StringBuilder();
         boolean found = false;
-        System.out.println("Looking for tasks with " + keyword);
+        sb.append(String.format("Looking for tasks with %s\n", keyword));
         for(int i = 0; i < len; i ++) {
             Task t = taskList.get(i);
             if(t.hasKeyword(keyword)) {
-                System.out.printf("%d. %s\n", i + 1, t);
+                sb.append(String.format("%d. %s\n", i + 1, t));
                 found = true;
             }
         }
         if(!found) {
-            System.out.println("No matches found for " + keyword);
+            sb.append(String.format("No matches found for " + keyword));
         }
-        ui.showLine();
+        gui.newResponse(sb.toString());
     }
 }
