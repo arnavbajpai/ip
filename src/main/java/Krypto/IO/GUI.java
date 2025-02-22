@@ -47,7 +47,8 @@ public class GUI extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        dialogContainer.getChildren().addAll(DialogBox.getUserDialog(input, userImage));
+        dialogContainer.getChildren().
+                addAll(DialogBox.getUserDialog(input, userImage));
         krypto.run(input);
         userInput.clear();
     }
@@ -72,7 +73,8 @@ public class GUI extends AnchorPane {
     }
 
     public void addTaskResponse(Task t, int len) {
-        newResponse(String.format("Got it. I've added this task :  %s\nNow you have %d tasks in the list.", t, len));
+        newResponse(String.format("Got it. I've added this task " +
+                ":  %s\nNow you have %d tasks in the list.", t, len));
     }
 
     /**
@@ -82,7 +84,8 @@ public class GUI extends AnchorPane {
      * @param len The current number of tasks in the list.
      */
     public void deleteTaskResponse(Task t, int len) {
-        newResponse(String.format("Got it. I've removed this task :  %s\nNow you have %d tasks in the list.", t, len));
+        newResponse(String.format("Got it. I've removed this task " +
+                ":  %s\nNow you have %d tasks in the list.", t, len));
     }
 
 }

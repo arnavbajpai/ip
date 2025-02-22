@@ -21,7 +21,8 @@ public class UnmarkCommand extends Command {
 
 
     public void execute(GUI gui, TaskList tasks, Storage storage) throws KryptoExceptions {
-        gui.newResponse(tasks.getTask(index).unmarkTask());
+        String msg = tasks.getTask(index).unmarkTask();
+        gui.newResponse(msg);
         storage.store(tasks);
     }
     public boolean isExit() {

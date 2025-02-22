@@ -63,9 +63,9 @@ public class Krypto extends Application{
     public void run(String prompt) {
         assert prompt != null : "User input should not be null";
         try {
-            Command c = Parser.parse(prompt);
-            c.execute(gui, tasks, storage);
-            if (c.isExit()) {
+            Command cmd = Parser.parse(prompt);
+            cmd.execute(gui, tasks, storage);
+            if (cmd.isExit()) {
                 PauseTransition delay = new PauseTransition(Duration.seconds(1));
                 delay.setOnFinished(event -> Platform.exit());
                 delay.play();

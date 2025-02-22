@@ -119,16 +119,16 @@ public class TaskList {
      */
     public void getTasksWithKeyword(String keyword) {
         StringBuilder sb = new StringBuilder();
-        boolean found = false;
+        boolean isFound = false;
         sb.append(String.format("Looking for tasks with %s\n", keyword));
         for(int i = 0; i < len; i ++) {
-            Task t = taskList.get(i);
-            if(t.hasKeyword(keyword)) {
-                sb.append(String.format("%d. %s\n", i + 1, t));
-                found = true;
+            Task task = taskList.get(i);
+            if(task.hasKeyword(keyword)) {
+                sb.append(String.format("%d. %s\n", i + 1, task));
+                isFound = true;
             }
         }
-        if(!found) {
+        if(!isFound) {
             sb.append(String.format("No matches found for " + keyword));
         }
         gui.newResponse(sb.toString());
