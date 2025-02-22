@@ -1,6 +1,6 @@
 package Krypto.Commands;
 import Krypto.Exceptions.KryptoExceptions;
-import Krypto.IO.UI;
+import Krypto.IO.GUI;
 import Krypto.IO.Storage;
 import Krypto.Utils.TaskList;
 
@@ -19,7 +19,7 @@ public class ShowCommand extends Command {
         this.date = date;
     }
 
-    public void execute(UI ui, TaskList tasks, Storage storage) throws KryptoExceptions {
+    public void execute(GUI gui, TaskList tasks, Storage storage) throws KryptoExceptions {
         tasks.printShowList(date);
     }
     public boolean isExit() {

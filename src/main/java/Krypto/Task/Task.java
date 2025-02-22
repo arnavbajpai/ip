@@ -55,11 +55,10 @@ public class Task {
     /**
      * Marks the task as completed and updates its status icon.
      */
-    public void markTask() {
+    public String markTask() {
         this.isDone = true;
         this.sign = "X";
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(this);
+        return "Nice! I've marked this task as done: " + this;
     }
 
     /**
@@ -79,11 +78,10 @@ public class Task {
     /**
      * Unmarks the task as not completed and updates its status icon.
      */
-    public void unmarkTask() {
+    public String unmarkTask() {
         this.isDone = false;
         this.sign = "";
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(this);
+        return "OK! I've marked this task as not done yet: " + this;
     }
 
     public String getStatusIcon() {
