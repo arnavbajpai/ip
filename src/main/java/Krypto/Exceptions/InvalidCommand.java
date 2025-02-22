@@ -18,6 +18,7 @@ public class InvalidCommand extends KryptoExceptions {
 
     @Override
     public String toString() {
-        return String.format("Sorry. I don't know what `%s` means.", this.unknown);
+        return String.format("Sorry. I don't know what `%s` means.",
+                this.unknown);
     }
 }
