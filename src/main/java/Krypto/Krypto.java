@@ -48,6 +48,7 @@ public class Krypto extends Application{
             gui.showError(e);
             tasks = new TaskList();
         }
+        assert gui != null : "GUI should be initialized after loading FXML";
     }
     public Krypto() {
         this(FILE_PATH);
@@ -60,6 +61,7 @@ public class Krypto extends Application{
      */
 
     public void run(String prompt) {
+        assert prompt != null : "User input should not be null";
         try {
             Command c = Parser.parse(prompt);
             c.execute(gui, tasks, storage);
@@ -75,6 +77,7 @@ public class Krypto extends Application{
 
     @Override
     public void start(Stage stage) {
+        assert root != null : "FXML root layout should be loaded properly";
         Scene scene = new Scene(root);
         stage.setScene(scene);
         gui.setKrypto(this);

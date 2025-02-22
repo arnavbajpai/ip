@@ -31,6 +31,7 @@ public class Storage {
             System.out.println("File not found. Creating new file.....");
             createFile();
         }
+        assert file.exists() : "File should exist after creation";
     }
 
     /**
