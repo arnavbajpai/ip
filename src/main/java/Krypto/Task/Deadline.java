@@ -1,4 +1,6 @@
 package Krypto.Task;
+import Krypto.Exceptions.KryptoExceptions;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -8,7 +10,7 @@ import java.time.format.DateTimeParseException;
  */
 public class Deadline extends Task {
 
-    private final LocalDateTime by;
+    private  LocalDateTime by;
 
     /**
      * Constructs a Deadline object with the specified description and deadline time.
@@ -35,6 +37,13 @@ public class Deadline extends Task {
         return(date1.equals(byDate));
     }
 
+    @Override
+    public void setDate(LocalDateTime from, LocalDateTime to) throws KryptoExceptions {
+        if (to != null) {
+            throw new KryptoExceptions("Failed to reschedule task, provided 1 extra time argument");
+        }
+        this.by = from;
+    }
     /**
      * Returns a string representation of the Deadline task.
      *

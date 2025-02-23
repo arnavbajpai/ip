@@ -1,4 +1,7 @@
 package Krypto.Task;
+import Krypto.Exceptions.KryptoExceptions;
+
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -8,8 +11,8 @@ import java.time.format.DateTimeFormatter;
 public class Task {
     protected String description;
     protected boolean isDone = false;
-    protected static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    protected static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy ha");
+    public static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    public static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy ha");
     private String sign = "";
 
     /**
@@ -82,6 +85,10 @@ public class Task {
         this.isDone = false;
         this.sign = "";
         return "OK! I've marked this task as not done yet: " + this;
+    }
+
+    public void setDate(LocalDateTime from, LocalDateTime to) throws KryptoExceptions {
+        throw new KryptoExceptions("Sorry I can't reschedule a task without time information");
     }
 
     public String getStatusIcon() {

@@ -1,4 +1,6 @@
 package Krypto.Task;
+import Krypto.Exceptions.KryptoExceptions;
+
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -8,8 +10,8 @@ import java.time.format.DateTimeParseException;
  */
 public class Event extends Task {
 
-    private final LocalDateTime from;
-    private final LocalDateTime to;
+    private LocalDateTime from;
+    private  LocalDateTime to;
 
     /**
      * Constructs an Event task with the specified description, start, and end time.
@@ -49,6 +51,15 @@ public class Event extends Task {
         LocalDate fromDate = LocalDate.parse(from.format(INPUT_FORMAT).split(" ")[0]);
         LocalDate toDate = LocalDate.parse(to.format(INPUT_FORMAT).split(" ")[0]);
         return (date1.equals(fromDate) || date1.equals(toDate));
+    }
+
+    @Override
+    public void setDate(LocalDateTime from, LocalDateTime to) throws KryptoExceptions {
+        if (to == null) {
+            throw new KryptoExceptions("Failed to reschedule event, missing end time.");
+        }
+        this.from = from;
+        this.to = to;
     }
 
     /**

@@ -1,15 +1,7 @@
 package Krypto.Utils;
 import java.time.format.DateTimeParseException;
 
-import Krypto.Commands.Command;
-import Krypto.Commands.AddCommand;
-import Krypto.Commands.DeleteCommand;
-import Krypto.Commands.ExitCommand;
-import Krypto.Commands.ListCommand;
-import Krypto.Commands.MarkCommand;
-import Krypto.Commands.ShowCommand;
-import Krypto.Commands.UnmarkCommand;
-import Krypto.Commands.FindCommand;
+import Krypto.Commands.*;
 
 import Krypto.Exceptions.KryptoExceptions;
 import Krypto.Exceptions.IncompleteCommand;
@@ -33,6 +25,8 @@ public class Parser {
     private static String SHOW_FORMAT = "show yyyy-MM-dd";
     private static String FIND_FORMAT = "find <keyword>";
 
+    private static String RESCHEDULE_FORMAT = "reschedule <index> ->yyyy-MM-dd HH:mm,yyyy-MM-dd HH:mm";
+
     /**
      * Returns the format string for a given command type.
      *
@@ -48,6 +42,7 @@ public class Parser {
             case "find" -> FIND_FORMAT;
             case "deadline" -> DEADLINE_FORMAT;
             case "event" -> EVENT_FORMAT;
+            case "reschedule" -> RESCHEDULE_FORMAT;
             default -> "";
         };
     }
@@ -63,14 +58,7 @@ public class Parser {
     public static Command parse(String prompt) throws KryptoExceptions {
         String[] split = prompt.split(" ");
         String first = split[0];
-
-        if (first.equals("mark") || first.equals("unmark")
-                || first.equals("delete") || first.equals("show")
-                || first.equals("find")) {
-            if (split.length < 2) {
-                throw new IncompleteCommand(first, getFormat(first));
-            }
-        }
+        checkLength(first, split);
         return switch (first) {
             case "bye" -> new ExitCommand();
             case "list" -> new ListCommand();
@@ -79,9 +67,25 @@ public class Parser {
             case "delete" -> new DeleteCommand(Integer.parseInt(split[1]) - 1);
             case "show" -> new ShowCommand(split[1]);
             case "find" -> new FindCommand(split[1]);
+            case "reschedule" -> new RescheduleCommand(split[1], prompt.split("->")[1]);
             case "todo", "event", "deadline" -> createTaskCommand(prompt, split);
             default -> throw new InvalidCommand(first);
         };
+    }
+    private static void checkLength(String first, String[] split) throws KryptoExceptions {
+        boolean isTwo = first.equals("mark") || first.equals("unmark")
+                || first.equals("delete") || first.equals("show") || first.equals("find");
+        boolean isFour = first.equals("reschedule");
+        int len = split.length;
+        if (isFour) {
+            if (len < 4) {
+                throw new IncompleteCommand(first, getFormat(first));
+            }
+        } else if (isTwo) {
+            if (len < 2) {
+                throw new IncompleteCommand(first, getFormat(first));
+            }
+        }
     }
 
     /**
@@ -110,7 +114,7 @@ public class Parser {
                 try {
                     newTask = new Deadline(prompt, parts[1]);
                 } catch (DateTimeParseException e) {
-                    throw new KryptoExceptions("Invalid date format! Use yyyy-MM-dd HH:mm (e.g., 2-12-2019 18:00).");
+                    throw new KryptoExceptions("Invalid date format! Use /yyyy-MM-dd HH:mm (e.g., 2-12-2019 18:00).");
                 }
                 break;
             case "event":

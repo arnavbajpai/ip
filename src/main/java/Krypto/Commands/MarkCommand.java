@@ -19,11 +19,13 @@ public class MarkCommand extends Command {
         this.index = index;
     }
 
+    @Override
     public void execute(GUI gui, TaskList tasks, Storage storage) throws KryptoExceptions {
         gui.newResponse(tasks.getTask(index).markTask());
         storage.store(tasks);
     }
 
+   @Override
     public boolean isExit() {
         return false;
     }

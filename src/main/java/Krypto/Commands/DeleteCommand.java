@@ -18,10 +18,12 @@ public class DeleteCommand extends Command {
         this.index = index;
     }
 
+    @Override
     public void execute(GUI gui, TaskList tasks, Storage storage) throws KryptoExceptions {
         tasks.deleteTask(index);
         storage.store(tasks);
     }
+    @Override
     public boolean isExit() {
         return false;
     }

@@ -93,7 +93,7 @@ public class TaskList {
      */
     public Task getTask(int index) throws KryptoExceptions {
         if(index >= len || index < 0) {
-            throw new KryptoExceptions("Invalid deletion id supplied.");
+            throw new KryptoExceptions("Invalid id supplied.");
         }
         return taskList.get(index);
     }
