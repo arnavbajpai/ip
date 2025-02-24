@@ -1,7 +1,6 @@
 # Krypto
 
-Krypto is a task management chatbot designed for users who prefer typing commands. It supports four types of tasks: `todo`, `deadline`, `event`, and `doWithinPeriod`.
-
+Krypto is a task management chatbot designed for users who prefer typing commands. It supports three types of tasks: `todo`, `deadline`, and `event`.
 ![Gallery](./Ui.png)
 
 ## Installation
