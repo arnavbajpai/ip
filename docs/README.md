@@ -1,30 +1,31 @@
-# Duke User Guide
+# Krypto ChatBot ⚓
 
-// Update the title above to match the actual product name
+> "Your mind is for having ideas, not holding them." - David Allen ([source](https://en.wikipedia.org/wiki/Dave_Allen_(comedian)))
 
-// Product screenshot goes here
+DukePro frees your mind of having to remember things you need to do. It's,
 
-// Product intro goes here
+* text-based
+* easy to learn
+* ~~FAST~~ **SUPER FAST** to use
 
-## Adding deadlines
+All you need to do is,
 
-// Describe the action and its outcome.
+1. download it from [here](https://github.com/arnavbajpai/ip).
+2. double-click it.
+3. add your tasks.
+4. let it manage your tasks for you 😋
 
-// Give examples of usage
+And it is **FREE**!
 
-Example: `keyword (optional arguments)`
+## Features:
 
-// A description of the expected outcome goes here
+- [x] Managing tasks
+- [ ] Managing deadlines (coming soon)
+- [ ] Reminders (coming soon)
 
-```
-expected output
-```
+If you are a Java programmer, you can use it to practice Java too. Here's the `main` method:
 
-## Feature ABC
-
-// Feature details
-
-
-## Feature XYZ
-
-// Feature details
+```java
+public static void main(String[] args) {
+        new Krypto(FILE_PATH).run();
+    }
