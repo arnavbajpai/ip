@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * The main class for the Krypto application.
@@ -22,6 +23,8 @@ import java.io.IOException;
  */
 public class Krypto extends Application{
     private static final String FILE_PATH = "src/main/data/Krypto.txt";
+
+    private static final String FXML_PATH = "/view/GUI.FXML";
     private Storage storage;
     private TaskList tasks;
     private GUI gui = null;
@@ -35,7 +38,7 @@ public class Krypto extends Application{
      * @param filePath The path to the storage file.
      */
     public Krypto(String filePath) {
-        FXMLLoader fxmlLoader = new FXMLLoader(Krypto.class.getResource("/view/GUI.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML_PATH));
         try {
             root = fxmlLoader.load();
             gui = fxmlLoader.getController();

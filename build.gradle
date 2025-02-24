@@ -26,7 +26,6 @@ dependencies {
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'mac'
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'linux'
 }
-
 test {
     useJUnitPlatform()
 
@@ -44,12 +43,9 @@ test {
 application {
     mainClass.set("Krypto.Launcher")
 }
-
 shadowJar {
-    archiveBaseName = "duke"
-    archiveClassifier = null
+    archiveFileName = 'krypto.jar'
 }
-
 run{
     standardInput = System.in
 }
