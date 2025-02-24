@@ -87,5 +87,4 @@ public class GUI extends AnchorPane {
         newResponse(String.format("Got it. I've removed this task " +
                 ":  %s\nNow you have %d tasks in the list.", t, len));
     }
-
 }
