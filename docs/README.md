@@ -1,15 +1,18 @@
 # Krypto
 
 Krypto is a task management chatbot designed for users who prefer typing commands. It supports three types of tasks: `todo`, `deadline`, and `event`.
+
+
 ![Gallery](./Ui.png)
+
 
 ## Installation
 
-1. Download the jar from [Krypto](https://github.com/ToxOptimism/ip/releases/) releases.
+1. Download the latest jar from [Krypto](https://github.com/ToxOptimism/ip/releases/) releases.
 2. Double-click the jar file or open a terminal, navigate to the directory where Krypto is downloaded, and run:
 
 ```bash
-java -jar Krypto-v0.2.jar
+java -jar krypto.jar
 ```
 
 ## Features and User Guide
